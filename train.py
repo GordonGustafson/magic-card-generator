@@ -22,7 +22,7 @@ def fine_tune_gpt2(model_name="openai-community/gpt2"):
     model = GPT2LMHeadModel.from_pretrained(model_name)
     # There's both "train" and "train_clean" splits. Haven't looked in to which to use yet.
     dataset = load_dataset("MechaCroc/magic-the-gathering")
-    dataset = dataset["train"].select(range(100)).train_test_split(test_size=0.2, seed=42)
+    dataset = dataset["train"].train_test_split(test_size=0.1, seed=42)
 
     print(dataset)
 
@@ -36,10 +36,11 @@ def fine_tune_gpt2(model_name="openai-community/gpt2"):
     # Define training arguments
     training_args = TrainingArguments(
         output_dir="./results",
-        evaluation_strategy="epoch",
+        eval_strategy="steps",
+        eval_steps=400,
         save_strategy="epoch",
-        per_device_train_batch_size=4,
-        per_device_eval_batch_size=4,
+        per_device_train_batch_size=7,
+        per_device_eval_batch_size=7,
         num_train_epochs=1,
         weight_decay=0.01,
         logging_dir="./logs",
