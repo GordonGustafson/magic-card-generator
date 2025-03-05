@@ -1,0 +1,20 @@
+* 
+BERT stands for Bidirectional Encoder Representations from Transformers.
+
+* code scraps
+** 
+from pathlib import Path
+
+from dataset import MTGCardDataset
+
+dataset_path = Path("AllPrintings.json")
+mtg_dataset = MTGCardDataset(dataset_path)
+
+for i in range(100):
+    training_string = mtg_dataset[i]
+    print(training_string)
+
+** 
+from pprint import pprint
+card = next(c for c in data['data']['EVE']['cards'] if "Archon of Justice" in c["name"])
+pprint(card)
